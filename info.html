@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خدماتنا | WINNER</title>
+    <link rel="icon" href="images\WINNER LOGO NEW1.ico" type="image/x-icon">
+    <meta name="description" content="عرض صورة مع تأثير حركة 3D عند تحريك الفأرة، مع شرح عن الخدمات التي نقدمها.">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap">
+    <style>
+        :root {
+            --primary: #7289DA;
+            --text-light: #DCDDDE;
+            --button-bg: #FF73FA;
+            --button-hover: #A67DFF;
+            --border-color: #ddd;
+            --active-color: #4caf50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: #09090c;
+            color: var(--text-light);
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* فيديو الخلفية */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .container {
+            perspective: 100px;
+        }
+
+        .image-wrapper {
+            width: 200px;
+            height: 200px;
+            margin: 20px;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .image-wrapper:hover img {
+            transform: scale(1.05) rotateY(15deg) rotateX(15deg);
+        }
+
+        .image-wrapper:hover {
+            transform: rotateX(10deg) rotateY(10deg);
+        }
+
+        .services-section {
+            margin-top: 50px;
+            padding: 40px;
+            background: #111111;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 1400px;
+        }
+
+        .services-section h2 {
+            font-size: 3rem;
+            margin-bottom: 40px;
+            color: var(--primary);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .service-card {
+            background-color: #222222;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: left;
+            color: var(--text-light);
+            transition: transform 0.3s ease-in-out;
+            max-width: 350px;
+            margin: 0 auto;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-card img {
+            width: 100%;
+            height: 400px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .service-card p {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+
+        .back-button {
+            background-color: var(--button-bg);
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 1.5rem 3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 50px;
+        }
+
+        .back-button:hover {
+            background-color: var(--button-hover);
+        }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            opacity: 0.8;
+        }
+
+        /* شريط التبديل العصري على اليسار */
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            left: 20px; /* تغيير الموقع إلى اليسار */
+            background-color: var(--primary);
+            border-radius: 30px;
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            width: 160px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            z-index: 1000; /* التأكد من أن الشريط فوق المحتوى */
+        }
+
+        .lang-option {
+            padding: 10px 20px;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 30px;
+            transition: background-color 0.3s ease;
+        }
+
+        .lang-option:hover {
+            background-color: var(--active-color);
+        }
+
+        .lang-option.active {
+            background-color: var(--active-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شريط تغيير اللغة -->
+    <div class="lang-switcher" onclick="toggleLanguage()">
+        <div class="lang-option active" id="lang-ar">عربي</div>
+        <div class="lang-option" id="lang-en">English</div>
+    </div>
+
+    <!-- فيديو الخلفية -->
+    <video class="video-background" autoplay muted loop>
+        <source src="video/background.mp4" type="video/mp4">
+        متصفحك لا يدعم الفيديو
+    </video>
+
+    <!-- صورة مع تأثير 3D -->
+    <div class="container">
+        <div class="image-wrapper">
+            <img src="images/WINNER LOGO NEW.png" alt="صورة بتأثير 3D">
+        </div>
+    </div>
+
+    <!-- قسم الخدمات -->
+    <div class="services-section">
+        <h2 data-en="Our Services" data-ar="خدماتنا">خدماتنا</h2>
+        <div class="services-grid">
+            <!-- خدمة 1 -->
+            <div class="service-card">
+                <img src="images/التصميم.png" alt="خدمة 1">
+                <h3 data-en="Design Service" data-ar="خدمة التصميم">خدمة التصميم</h3>
+                <p data-en="We offer innovative design services that help you get unique designs to meet your needs." data-ar="نحن نقدم خدمات تصميم مبتكرة تتيح لك الحصول على تصاميم فريدة تلبي احتياجاتك.">
+                    نحن نقدم خدمات تصميم مبتكرة تتيح لك الحصول على تصاميم فريدة تلبي احتياجاتك.
+                </p>
+            </div>
+            <!-- خدمة 2 -->
+            <div class="service-card">
+                <img src="images/التصميم2.png" alt="خدمة 2">
+                <h3 data-en="Technical Support" data-ar="خدمة الدعم الفني">خدمة الدعم الفني</h3>
+                <p data-en="Our team is ready to support you and solve any problem you face with our products or services." data-ar="فريقنا جاهز لدعمك وحل أي مشكلة تواجهها في منتجاتنا أو خدماتنا.">
+                    فريقنا جاهز لدعمك وحل أي مشكلة تواجهها في منتجاتنا أو خدماتنا.
+                </p>
+            </div>
+            <!-- خدمة 3 -->
+            <div class="service-card">
+                <img src="images/التصميم3.png" alt="خدمة 3">
+                <h3 data-en="Consultation Service" data-ar="خدمة الاستشارات">خدمة الاستشارات</h3>
+                <p data-en="We offer specialized consultations to help you make the best decisions for your business." data-ar="نقدم استشارات متخصصة تساعدك في اتخاذ أفضل القرارات لعملك.">
+                    نقدم استشارات متخصصة تساعدك في اتخاذ أفضل القرارات لعملك.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- زر العودة إلى الصفحة الرئيسية -->
+    <a href="index.html">
+        <button class="back-button">العودة إلى الصفحة الرئيسية</button>
+    </a>
+
+    <div class="footer">
+        <p data-en="WINNER - All rights reserved © 2025" data-ar="WINNER - جميع الحقوق محفوظة © 2025">
+            WINNER - جميع الحقوق محفوظة © 2025
+        </p>
+    </div>
+
+    <script>
+        // دالة لتبديل اللغة
+        function toggleLanguage() {
+            var langToggle = document.querySelector('.lang-switcher');
+            var currentLang = document.querySelector('.lang-option.active').id;
+
+            // تبديل النصوص بين العربية والإنجليزية
+            if (currentLang === 'lang-ar') {
+                document.querySelector('.lang-option.active').classList.remove('active');
+                document.getElementById('lang-en').classList.add('active');
+                document.querySelector('html').setAttribute('lang', 'en');
+            } else {
+                document.querySelector('.lang-option.active').classList.remove('active');
+                document.getElementById('lang-ar').classList.add('active');
+                document.querySelector('html').setAttribute('lang', 'ar');
+            }
+
+            // تبديل النصوص داخل العناصر
+            document.querySelectorAll('[data-en]').forEach(function(element) {
+                element.textContent = element.getAttribute(currentLang === 'lang-ar' ? 'data-en' : 'data-ar');
+            });
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعم فني | WINNER</title>
+    <meta name="description" content="صفحة دعم فني متكاملة">
+    <link rel="icon" href="images\WINNER LOGO NEW1.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7289DA;
+            --primary-hover: #677BC4;
+            --secondary: #FF73FA;
+            --dark: #0e0e12;
+            --darker: #09090c;
+            --text: #ffffff;
+            --text-light: #DCDDDE;
+            --purple-light: #a67dff;
+            --purple-gradient: linear-gradient(45deg, #6648c8, #a67dff);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--dark);
+            margin: 0;
+            padding: 0;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* فيديو الخلفية */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(31, 31, 46, 0.8); /* خلفية شبه شفافة */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary);
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: var(--darker);
+            color: var(--text);
+        }
+
+        button {
+            background-color: var(--primary);
+            color: var(--text);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .back-button {
+            background-color: var(--secondary);
+            color: var(--text);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: var(--purple-light);
+        }
+
+        .response-message {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- فيديو الخلفية -->
+    <video class="video-background" autoplay muted loop>
+        <source src="Video/background.mp4" type="video/mp4">
+        متصفحك لا يدعم الفيديو
+    </video>
+
+    <div class="container">
+        <h1>دعم فني</h1>
+        <form id="supportForm">
+            <label for="name">اسمك</label>
+            <input type="text" id="name" required placeholder="أدخل اسمك">
+
+            <label for="email">بريدك الإلكتروني</label>
+            <input type="email" id="email" required placeholder="أدخل بريدك الإلكتروني">
+
+            <label for="phone">رقم الجوال</label>
+            <input type="text" id="phone" required placeholder="أدخل رقم جوالك">
+
+            <label for="message">الرسالة</label>
+            <textarea id="message" required placeholder="أدخل رسالتك هنا" rows="4"></textarea>
+
+            <button type="submit">إرسال</button>
+        </form>
+
+        <div id="responseMessage" class="response-message"></div>
+
+        <!-- زر العودة إلى الصفحة الرئيسية -->
+        <button class="back-button" onclick="window.location.href = 'index.html';">العودة إلى الصفحة الرئيسية</button>
+    </div>
+
+    <script>
+        document.getElementById('supportForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // منع ارسال الفورم بالطريقة التقليدية
+
+            // جمع البيانات من الحقول
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+
+            // التحقق من أن الرسالة ليست فارغة
+            if (message.trim() === '') {
+                document.getElementById('responseMessage').innerHTML = '<p class="error">يرجى كتابة المشكلة أو الرسالة.</p>';
+                return;
+            }
+
+            // هنا ضع رابط Webhook الفعلي
+            const webhookUrl = 'https://discord.com/api/webhooks/1359669240918966292/H_CQToyYv6q7vLy9uJ0MyM2fTqdan4XChfdnIZ6w4dgwQeapeZHNIPAaxxUnLLwBp2uO'; // استبدل هذا بالرابط الفعلي
+
+            const data = {
+                content: `اسمك: ${name}\nبريدك الإلكتروني: ${email}\nرقم الجوال: ${phone}\nالرسالة: ${message}`
+            };
+
+            // إرسال البيانات إلى Webhook باستخدام fetch
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('فشل في إرسال الطلب. حالة الاستجابة: ' + response.status);
+                }
+                return response.text(); // استخدام text بدلاً من JSON لمعالجة الاستجابة
+            })
+            .then(result => {
+                console.log('نتيجة الاستجابة:', result);
+                document.getElementById('responseMessage').innerHTML = '<p class="success">تم إرسال الطلب بنجاح! سيتم التواصل معك عبر بريدك الإلكتروني أو رقم الجوال قريباً.</p>';
+                document.getElementById('supportForm').reset(); // إعادة تعيين النموذج
+            })
+            .catch(error => {
+                console.error('خطأ في إرسال البيانات:', error);
+                document.getElementById('responseMessage').innerHTML = `<p class="error">فشل في إرسال الطلب. يرجى المحاولة مرة أخرى. تفاصيل الخطأ: ${error.message}</p>`;
+            });
+        });
+    </script>
+
+</body>
+</html>

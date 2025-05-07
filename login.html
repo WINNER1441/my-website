@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>تسجيل الدخول | WINNER</title>
+  <link rel="icon" href="public/images/WINNER LOGO NEW1.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #7289DA;
+      --secondary: #FF73FA;
+      --dark: #0e0e12;
+      --darker: #09090c;
+      --text: #ffffff;
+      --text-light: #DCDDDE;
+      --error: #ff4d4f;
+      --success: #28a745;
+      --purple-gradient: linear-gradient(45deg, #6648c8, #a67dff);
+      --transition: 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #161616, #272727);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+      color: var(--text);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* إضافة الفيديو في الخلفية */
+    body::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1554284315-e775a1bfc179') no-repeat center center/cover;
+      opacity: 0.2;
+      filter: blur(10px);
+    }
+
+    /* إضافة الفيديو كخلفية */
+    video.background-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .logo {
+      width: 120px;
+      margin-bottom: 20px;
+      animation: logoAnimation 1.5s ease-in-out;
+    }
+
+    @keyframes logoAnimation {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 50;
+      }
+    }
+
+    .login-container {
+      background: rgba(20, 20, 28, 0.85);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      z-index: 1;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: var(--text-light);
+      font-weight: bold;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      background: var(--dark);
+      border: none;
+      border-radius: 8px;
+      color: var(--text-light);
+      font-size: 16px;
+      transition: var(--transition);
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .input-field:focus {
+      border: 2px solid var(--primary);
+      background: var(--darker);
+      box-shadow: 0 0 8px var(--primary);
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 12px;
+      background: var(--purple-gradient);
+      border: none;
+      border-radius: 50px;
+      color: var(--text);
+      font-weight: bold;
+      font-size: 18px;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .login-button:hover {
+      background: var(--secondary);
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      justify-content: start;
+      gap: 10px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+    }
+
+    .checkbox-container label {
+      font-size: 14px;
+      color: var(--text-light);
+      cursor: pointer;
+    }
+
+    .message {
+      display: none;
+      margin-top: 15px;
+      font-size: 15px;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .message.error {
+      background: rgba(255, 77, 79, 0.1);
+      color: var(--error);
+    }
+
+    .message.success {
+      background: rgba(40, 167, 69, 0.1);
+      color: var(--success);
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 14px;
+      color: var(--text-light);
+    }
+
+    .footer a {
+      color: var(--secondary);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- إضافة الفيديو في الخلفية -->
+  <video class="background-video" autoplay loop muted>
+    <source src="video/background.mp4"" type="video/mp4">
+    متصفحك لا يدعم الفيديو.
+  </video>
+
+  <img src="images\WINNERLOGO.png" alt="WINNER Logo" class="logo">
+
+  <div class="login-container">
+    <h2>تسجيل الدخول</h2>
+
+    <div id="loginMessage" class="message"></div>
+
+    <input id="loginUsername" type="text" class="input-field" placeholder="اسم المستخدم أو البريد الإلكتروني">
+    <input id="loginPassword" type="password" class="input-field" placeholder="كلمة المرور">
+
+    <div class="checkbox-container">
+      <input type="checkbox" id="rememberMe">
+      <label for="rememberMe">تسجيل دخول تلقائي لمدة 7 أيام</label>
+    </div>
+
+    <button class="login-button" onclick="login()">تسجيل الدخول</button>
+
+    <div class="footer">
+      <p>لا تملك حساب؟ <a href="register.html">إنشاء حساب</a></p>
+    </div>
+  </div>
+
+  <script>
+    function login() {
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+      const rememberMe = document.getElementById('rememberMe').checked;
+      const messageDiv = document.getElementById('loginMessage');
+
+      messageDiv.style.display = "none";
+      messageDiv.textContent = "";
+
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+
+      const user = users.find(u => (u.username === username || u.email === username) && u.password === password);
+
+      if (user) {
+        messageDiv.textContent = "✅ تم تسجيل الدخول بنجاح!";
+        messageDiv.className = "message success";
+        messageDiv.style.display = "block";
+
+        if (rememberMe) {
+          const expiresAt = Date.now() + 7 * 24 * 60 * 60 * 1000; // 7 أيام
+          localStorage.setItem('currentUser', JSON.stringify({ username: user.username, expiresAt }));
+        } else {
+          localStorage.setItem('currentUser', JSON.stringify({ username: user.username }));
+        }
+
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1500);
+      } else {
+        messageDiv.textContent = "❌ اسم المستخدم أو كلمة المرور غير صحيحة.";
+        messageDiv.className = "message error";
+        messageDiv.style.display = "block";
+      }
+    }
+
+    // تحقق إذا كان المستخدم سجل دخول تلقائي
+    window.onload = function() {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      if (currentUser && (!currentUser.expiresAt || Date.now() < currentUser.expiresAt)) {
+        window.location.href = "index.html";
+      }
+    }
+  </script>
+</body>
+</html>

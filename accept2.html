@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تأكيد الطلب | WINNER</title>
+    <meta name="description" content="صفحة تأكيد الطلب بتصميم WINNER">
+    <link rel="icon" href="images\WINNER LOGO NEW1.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #7289DA;
+            --primary-hover: #677BC4;
+            --secondary: #FF73FA;
+            --dark: #0e0e12;
+            --darker: #09090c;
+            --text: #ffffff;
+            --text-light: #DCDDDE;
+            --purple-light: #a67dff;
+            --purple-gradient: linear-gradient(45deg, #6648c8, #a67dff);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--darker);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: var(--transition);
+            position: relative;
+            padding: 20px;
+        }
+
+        /* فيديو الخلفية */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* التأكد من أن الفيديو في الخلفية */
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--text);
+        }
+
+        .order-summary {
+            background: rgba(20, 20, 28, 0.5);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            margin-bottom: 20px;
+        }
+
+        .order-summary h3 {
+            color: var(--text);
+            font-size: 1.5rem;
+        }
+
+        .order-summary p {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        .contact-form input, .contact-form button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-size: 1.2rem;
+        }
+
+        .contact-form button {
+            background: var(--purple-gradient);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .contact-form button:hover {
+            background: var(--primary-hover);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-bottom: 2rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            opacity: 0.7;
+        }
+
+        .footer a {
+            color: var(--purple-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .return-btn {
+            margin-top: 20px;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .return-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- فيديو الخلفية -->
+    <video class="video-background" autoplay muted loop>
+        <source src="video/background.mp4" type="video/mp4">
+        متصفحك لا يدعم الفيديو
+    </video>
+
+    <div class="content">
+        <h1>تأكيد الطلب</h1>
+
+        <div class="order-summary">
+            <h3>تفاصيل الطلب</h3>
+            <p><strong>المنتج:</strong> <span id="productName"></span></p>
+            <p><strong>السعر:</strong> <span id="totalPrice"></span> ريال</p>
+            <p><strong>الكمية:</strong> <span id="quantity"></span></p>
+        </div>
+
+        <div class="contact-form">
+            <h3>يرجى إدخال بياناتك للتواصل:</h3>
+            <input type="text" id="firstName" placeholder="الاسم الأول" required>
+            <input type="text" id="lastName" placeholder="الاسم الثاني" required>
+            <input type="tel" id="phoneNumber" placeholder="رقم الهاتف" required>
+            <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+            <button onclick="submitOrder()">إرسال الطلب</button>
+        </div>
+
+        <button class="return-btn" onclick="window.location.href='index.html';">العودة إلى القائمة الرئيسية</button>
+
+        <div class="footer">
+            نظام إدارة المتجر بتصميم WINNER - جميع الحقوق محفوظة © <span id="year"></span>
+            <br> <a href="https://discord.gg/yourserver" target="_blank">انضم إلى مجتمعنا</a>
+        </div>
+    </div>
+
+    <script>
+        // جلب البيانات من URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productName = urlParams.get('productName');
+        const totalPrice = urlParams.get('price');
+        const quantity = urlParams.get('quantity');
+
+        document.getElementById('productName').textContent = productName;
+        document.getElementById('totalPrice').textContent = totalPrice;
+        document.getElementById('quantity').textContent = quantity;
+
+        // إرسال البيانات عبر Webhook
+        function submitOrder() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const email = document.getElementById('email').value;
+
+            if (firstName && lastName && phoneNumber && email) {
+                const orderData = {
+                    productName,
+                    quantity,
+                    totalPrice,
+                    firstName,
+                    lastName,
+                    phoneNumber,
+                    email
+                };
+
+                // Webhook URL
+                const webhookURL = 'https://discord.com/api/webhooks/1359669240918966292/H_CQToyYv6q7vLy9uJ0MyM2fTqdan4XChfdnIZ6w4dgwQeapeZHNIPAaxxUnLLwBp2uO';
+
+                fetch(webhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        content: `تم تقديم طلب جديد:\nاسم المنتج: ${productName}\nالكمية: ${quantity}\nالسعر: ${totalPrice}\nالاسم: ${firstName} ${lastName}\nرقم الهاتف: ${phoneNumber}\nالبريد الإلكتروني: ${email}`
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        alert('تم إرسال الطلب بنجاح!');
+                    } else {
+                        alert('فشل في إرسال الطلب');
+                    }
+                });
+            } else {
+                alert('من فضلك قم بإدخال جميع البيانات');
+            }
+        }
+
+        // تحديث السنة
+        const yearSpan = document.getElementById('year');
+        if (yearSpan) {
+            yearSpan.textContent = new Date().getFullYear();
+        }
+    </script>
+</body>
+</html>
